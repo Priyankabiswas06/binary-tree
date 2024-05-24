@@ -1,263 +1,135 @@
-<p align="center"> <img src="https://www.freecodecamp.org/news/content/images/2022/08/giphy-2.gif" height="150" width="150"> </p>
+class TreeNode:
+    def __init__(self, value=0, left=None, right=None):
+        self.value = value
+        self.left = left
+        self.right = right
 
-<h1 align="center">Welcome to repositories of all basic project of python</h1></br></br>
-<B>Basic project for python</B>
+class BinaryTree:
+    def __init__(self, root=None):
+        self.root = root
 
-  <br>
-</h1>
+    def insert(self, value):
+        if not self.root:
+            self.root = TreeNode(value)
+        else:
+            self._insert_recursive(self.root, value)
 
-[![made-with-python](https://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
+    def _insert_recursive(self, node, value):
+        if value < node.value:
+            if node.left is None:
+                node.left = TreeNode(value)
+            else:
+                self._insert_recursive(node.left, value)
+        else:
+            if node.right is None:
+                node.right = TreeNode(value)
+            else:
+                self._insert_recursive(node.right, value)
 
-<h1 align="center">WHY THIS</h1>
-<br>
-📌 As a beginner, small projects are a good way to understand Python more deeply and become more competent in it.</br></br>
+    def delete(self, value):
+        self.root = self._delete_recursive(self.root, value)
 
-📌 This repository offers a variety of fascinating mini-projects written in Python.</br>
+    def _delete_recursive(self, node, value):
+        if not node:
+            return node
+        if value < node.value:
+            node.left = self._delete_recursive(node.left, value)
+        elif value > node.value:
+            node.right = self._delete_recursive(node.right, value)
+        else:
+            if not node.left:
+                return node.right
+            elif not node.right:
+                return node.left
+            temp = self._min_value_node(node.right)
+            node.value = temp.value
+            node.right = self._delete_recursive(node.right, temp.value)
+        return node
 
-📌 Working on Python projects will undoubtedly improve your skills and raise your profile in preparation for the globalised marketplace outside.</br>
+    def _min_value_node(self, node):
+        current = node
+        while current.left is not None:
+            current = current.left
+        return current
 
+    def search(self, value):
+        return self._search_recursive(self.root, value)
 
-📌 This language deserves a lot of attention in today's world, and why not since it can address so many real-world problems?
+    def _search_recursive(self, node, value):
+        if not node or node.value == value:
+            return node
+        if value < node.value:
+            return self._search_recursive(node.left, value)
+        return self._search_recursive(node.right, value)
 
+    def in_order_traversal(self):
+        result = []
+        self._in_order_recursive(self.root, result)
+        return result
 
-<h1> Projects So Far ... </h1>
+    def _in_order_recursive(self, node, result):
+        if node:
+            self._in_order_recursive(node.left, result)
+            result.append(node.value)
+            self._in_order_recursive(node.right, result)
 
-<table>
-<tr>
+    def pre_order_traversal(self):
+        result = []
+        self._pre_order_recursive(self.root, result)
+        return result
 
-<td align="center">
-        <a href="https://github.com/Mrinank-Bhowmick/python-beginner-projects/tree/main/projects/Audiobook">
-            <sub><b>Audiobook</b></sub>
-        </a>
-</td>
+    def _pre_order_recursive(self, node, result):
+        if node:
+            result.append(node.value)
+            self._pre_order_recursive(node.left, result)
+            self._pre_order_recursive(node.right, result)
 
-<td align="center">
-        <a href="https://github.com/Mrinank-Bhowmick/python-beginner-projects/tree/main/projects/Desktop-Notification">
-            <sub><b>Desktop-Notification</b></sub>
-        </a>
-</td>
+    def post_order_traversal(self):
+        result = []
+        self._post_order_recursive(self.root, result)
+        return result
 
-<td align="center">
-        <a href="https://github.com/Mrinank-Bhowmick/python-beginner-projects/tree/main/projects/Dice-Roll-Simulator">
-            <sub><b>Dice-Roll-Simulator</b></sub>
-        </a>
-</td>
+    def _post_order_recursive(self, node, result):
+        if node:
+            self._post_order_recursive(node.left, result)
+            self._post_order_recursive(node.right, result)
+            result.append(node.value)
 
-<td align="center">
-        <a href="https://github.com/Mrinank-Bhowmick/python-beginner-projects/tree/main/projects/Madlibs-Generator">
-            <sub><b>Madlibs-Generator</b></sub>
-        </a>
-</td>
+# Example Usage
 
-</tr>
-<tr>
+# Create nodes
+root = TreeNode(10)
+node1 = TreeNode(5)
+node2 = TreeNode(15)
 
-<td align="center">
-        <a href="https://github.com/Mrinank-Bhowmick/python-beginner-projects/tree/main/projects/Make-API">
-            <sub><b>Make-API</b></sub>
-        </a>
-</td>
+# Manually creating the tree structure
+root.left = node1
+root.right = node2
 
-<td align="center">
-        <a href="https://github.com/Mrinank-Bhowmick/python-beginner-projects/tree/main/projects/Medium%20Article%20Reader">
-            <sub><b>Medium Article Reader</b></sub>
-        </a>
-</td>
+# Initialize the binary tree with a root node
+binary_tree = BinaryTree(root)
 
-<td align="center">
-        <a href="https://github.com/Mrinank-Bhowmick/python-beginner-projects/tree/main/projects/Quiz%20Game">
-            <sub><b>Quiz Game</b></sub>
-        </a>
-</td>
+# Insert additional nodes
+binary_tree.insert(3)
+binary_tree.insert(7)
+binary_tree.insert(12)
+binary_tree.insert(18)
 
-<td align="center">
-        <a href="https://github.com/Mrinank-Bhowmick/python-beginner-projects/tree/main/projects/Rock_Paper_Scissors">
-            <sub><b>Rock-Paper-Scissors</b></sub>
-        </a>
-</td>
+# Delete a node by value
+binary_tree.delete(7)
 
-</tr>
-<tr>
-<td align="center">
-        <a href="https://github.com/Mrinank-Bhowmick/python-beginner-projects/tree/main/projects/Send-Email">
-            <sub><b>Send-Email</b></sub>
-        </a>
-</td>
-<td align="center">
-        <a href="https://github.com/Mrinank-Bhowmick/python-beginner-projects/tree/main/projects/Tesla">
-            <sub><b>Tesla</b></sub>
-        </a>
-</td>
-<td align="center">
-        <a href="https://github.com/Mrinank-Bhowmick/python-beginner-projects/tree/main/projects/MorseCode%20Translator">
-            <sub><b>MorseCode Translator</b></sub>
-        </a>
-</td>
+# In-order traversal
+print("In-order traversal:", binary_tree.in_order_traversal())
 
-<td align="center">
-        <a href="https://github.com/Mrinank-Bhowmick/python-beginner-projects/tree/main/projects/Weather">
-            <sub><b>Weather</b></sub>
-        </a>
-</td>
+# Pre-order traversal
+print("Pre-order traversal:", binary_tree.pre_order_traversal())
 
-</tr>
-<tr>
-  <td align="center">
-        <a href="https://github.com/Mrinank-Bhowmick/python-beginner-projects/tree/main/projects/ProjectEuler">
-            <sub><b>ProjectEuler</b></sub>
-        </a>
-  </td>
-  <td align="center">
-        <a href="https://github.com/Mrinank-Bhowmick/python-beginner-projects/tree/main/projects/AudioRecorder">
-            <sub><b>AudioRecorder</b></sub>
-        </a>
-  </td>
-  <td align="center">
-        <a href="https://github.com/Mrinank-Bhowmick/python-beginner-projects/tree/main/projects/Hangman">
-            <sub><b>Hangman</b></sub>
-        </a>
-  </td>
-  <td align="center">
-        <a href="https://github.com/Mrinank-Bhowmick/python-beginner-projects/tree/main/projects/Voice-to-Text">
-            <sub><b>VoiceToText</b></sub>
-        </a>
-  </td>
-</tr>
-<tr>
-<td align="center">
-        <a href="https://github.com/Mrinank-Bhowmick/python-beginner-projects/tree/main/projects/text-translate">
-            <sub><b>TextTranslate</b></sub>
-        </a>
-  </td>
-  <td align="center">
-        <a href="https://github.com/Mrinank-Bhowmick/python-beginner-projects/tree/main/projects/Browser">
-            <sub><b>Own_browser</b></sub>
-        </a>
-  </td>
-  <td align="center">
-        <a href="https://github.com/Mrinank-Bhowmick/python-beginner-projects/tree/main/projects/HandCricket">
-            <sub><b>HandCricket</b></sub>
-        </a>
-  </td>
-  <td align="center">
-        <a href="https://github.com/Mrinank-Bhowmick/python-beginner-projects/tree/main/projects/English%20Thesaurus">
-            <sub><b>English Thesaurus</b></sub>
-        </a>
-  </td>
-</tr>
-<tr>
-<td align="center">
-        <a href="https://github.com/Mrinank-Bhowmick/python-beginner-projects/tree/main/projects/BMI_calculator">
-            <sub><b>BMI_calculator</b></sub>
-        </a>
-  </td>
-  <td align="center">
-        <a href="https://github.com/Mrinank-Bhowmick/python-beginner-projects/tree/main/projects/Higher-Lower">
-            <sub><b>Higher-Lower</b></sub>
-        </a>
-  </td>
-  <td align="center">
-        <a href="https://github.com/Mrinank-Bhowmick/python-beginner-projects/tree/main/projects/IPv4_Calculator-main">
-            <sub><b>IPv4_Calculator</b></sub>
-        </a>
-  </td>
-  <td align="center">
-        <a href="https://github.com/Mrinank-Bhowmick/python-beginner-projects/tree/main/projects/KbdXylo">
-            <sub><b>KbdXylo</b></sub>
-        </a>
-  </td>
-</tr>
-<tr>
-<td align="center">
-        <a href="https://github.com/Mrinank-Bhowmick/python-beginner-projects/tree/main/projects/NASA-APOD">
-            <sub><b>NASA-APOD</b></sub>
-        </a>
-  </td>
-  <td align="center">
-        <a href="https://github.com/Mrinank-Bhowmick/python-beginner-projects/tree/main/projects/Neurons">
-            <sub><b>Neurons</b></sub>
-        </a>
-  </td>
-  <td align="center">
-        <a href="https://github.com/Mrinank-Bhowmick/python-beginner-projects/tree/main/projects/Qt5_YouTube">
-            <sub><b>Qt5_YouTube</b></sub>
-        </a>
-  </td>
-  <td align="center">
-        <a href="https://github.com/Mrinank-Bhowmick/python-beginner-projects/tree/main/projects/Tic-Tac-Toe">
-            <sub><b>Tic-Tac-Toe</b></sub>
-        </a>
-  </td>
-</tr>  
-<tr>
-<td align="center">
-        <a href="https://github.com/Mrinank-Bhowmick/python-beginner-projects/tree/main/projects/Turtle%20Pattern">
-            <sub><b>TurtlePattern</b></sub>
-        </a>
-  </td>
-  <td align="center">
-        <a href="https://github.com/Mrinank-Bhowmick/python-beginner-projects/tree/main/projects/duplicate_search">
-            <sub><b>Duplicate-search</b></sub>
-        </a>
-  </td>
-  <td align="center">
-        <a href="https://github.com/Mrinank-Bhowmick/python-beginner-projects/tree/main/projects/snake_water_gun_game">
-            <sub><b>Snake-Water-Gun</b></sub>
-        </a>
-</tr>
-</table>
+# Post-order traversal
+print("Post-order traversal:", binary_tree.post_order_traversal())
 
-## Run these projects online :
-
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/Mrinank-Bhowmick/python-beginner-projects.git)
-
-<h1> Contributors </h1>
-
-<!-- readme: contributors -start -->
-<table>
-<tr>
-    <td align="center">
-        <a href="https://github.com/Priyankabiswas06">
-            <img src="https://avatars.githubusercontent.com/u/124877145?v=4" width="100;" alt="Priyanka-Biswas"/>
-            <br />
-            <sub><b>Priyanka Biswas</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/Pratappatil783">
-            <img src="https://avatars.githubusercontent.com/u/124978397?v=4" width="100;" alt="Pratap-Patil"/>
-            <br />
-            <sub><b>Pratap Patil</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/sabboo-3434">
-            <img src="https://avatars.githubusercontent.com/u/121706916?v=4" width="100;" alt="Sarwajeet"/>
-            <br />
-            <sub><b>Sarwajeet Pratap Singh </b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/mohitmahajan095">
-            <img src="https://avatars.githubusercontent.com/u/73893201?v=4" width="100;" alt="Mohit mahajan"/>
-            <br />
-            <sub><b>Mohit Mahajan</b></sub>
-        </a>
-    </td>
-   <td align="center">
-        <a href="https://github.com/arnoldsilway">
-            <img src="https://avatars.githubusercontent.com/u/125856796?v=4" width="100;" alt="Arnold"/>
-            <br />
-            <sub><b>Arnold Silway</b></sub>
-        </a>
-    </td>
-   </tr>
-   <td align="center">
-        <a href="https://github.com/Jayshaha1009">
-            <img src="https://avatars.githubusercontent.com/u/124890353?v=4" width="100;" alt="Jay Shaha"/>
-            <br />
-            <sub><b>Jay Shaha</b></sub>
-        </a>
-    </td>
-</table>
-<!-- readme: contributors -end -->
+# Search for a node
+found_node = binary_tree.search(12)
+if found_node:
+    print("Node found:", found_node.value)
+else:
+    print("Node not found")
